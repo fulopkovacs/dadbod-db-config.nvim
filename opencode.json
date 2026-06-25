@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "bash": {
+      "make test": "allow",
+      "make lint": "allow",
+      "make format": "allow",
+      "make format-check": "allow",
+      "make .deps/docgen.nvim": "allow",
+      "make clean": "allow"
+    }
+  },
+}
