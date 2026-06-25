@@ -1,9 +1,5 @@
 local M = {}
 
-local defaults = {
-    auto_load = true,
-}
-
 local config_filename = ".dbs.json"
 
 ---@brief
@@ -22,17 +18,6 @@ end
 
 local function is_valid_config(config)
     return type(config) == "table" and type(config.dbs) == "table" and vim.islist(config.dbs)
-end
-
---- Configure dadbod-db-config.nvim.
----@param opts? table
----@return table? result load result when auto_load is enabled
-function M.setup(opts)
-    M.opts = vim.tbl_extend("force", defaults, opts or {})
-
-    if M.opts.auto_load then
-        return M.load()
-    end
 end
 
 --- Load the project-local dadbod database config.
