@@ -1,0 +1,34 @@
+name: Lint
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  selene:
+    name: Selene
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache Selene
+        id: cache-selene
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/bin/selene
+          key: selene-${{ runner.os }}-0.31.0
+
+      - name: Install Rust
+        if: steps.cache-selene.outputs.cache-hit != 'true'
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Selene
+        if: steps.cache-selene.outputs.cache-hit != 'true'
+        run: cargo install selene --version 0.31.0
+
+      - name: Run Selene
+        run: make lint
