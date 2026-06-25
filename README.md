@@ -25,9 +25,6 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
         "tpope/vim-dadbod",
         "kristijanhusak/vim-dadbod-ui",
     },
-    config = function()
-        require("dadbod-db-config").setup()
-    end,
 }
 ```
 
@@ -41,9 +38,6 @@ For local development with `dev = true`:
         "tpope/vim-dadbod",
         "kristijanhusak/vim-dadbod-ui",
     },
-    config = function()
-        require("dadbod-db-config").setup()
-    end,
 }
 ```
 
@@ -63,19 +57,7 @@ Create a `.dbs.json` file in your project:
 }
 ```
 
-By default, `setup()` loads the nearest `.dbs.json` immediately:
-
-```lua
-require("dadbod-db-config").setup()
-```
-
-To configure the plugin without loading immediately:
-
-```lua
-require("dadbod-db-config").setup({
-    auto_load = false,
-})
-```
+The plugin loads the nearest `.dbs.json` automatically when it is loaded.
 
 Load or reload manually:
 
@@ -155,6 +137,20 @@ Use it in `.dbs.json` with:
 
 Each database entry requires `name` and `url`. Additional properties are allowed
 on entries so dadbod-related metadata can be added later.
+
+Example config:
+
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/fulopkovacs/dadbod-db-config.nvim/main/schemas/dbs.schema.json",
+  "dbs": [
+    {
+      "name": "opera-database",
+      "url": "sqlite:opera-db.sqlite"
+    }
+  ]
+}
+```
 
 ## Safety
 

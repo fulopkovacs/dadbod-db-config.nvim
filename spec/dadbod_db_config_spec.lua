@@ -40,13 +40,14 @@ describe("dadbod-db-config", function()
     end)
 
     after_each(function()
+        pcall(vim.api.nvim_del_user_command, "DadbodDbConfigLoad")
         pcall(vim.cmd, "silent! bwipe!")
         vim.fn.delete(temp_dir, "rf")
+        vim.g.loaded_dadbod_db_config = nil
         vim.g.dbs = nil
     end)
 
     it("loads the module", function()
-        assert.is_function(db_config.setup)
         assert.is_function(db_config.load)
     end)
 
@@ -142,13 +143,12 @@ describe("dadbod-db-config", function()
         assert.is_nil(vim.g.dbs)
     end)
 
-    it("setup auto-loads by default", function()
+    it("auto-loads when the plugin file is sourced", function()
         write_config(path("project", ".dbs.json"), "auto", "sqlite:auto.sqlite")
         edit_file(path("project", "src", "query.sql"))
 
-        local result = db_config.setup()
+        dofile(vim.fs.joinpath(vim.fn.getcwd(), "plugin", "dadbod-db-config.lua"))
 
-        assert.is_true(result.loaded)
         assert.are.same({
             {
                 name = "auto",
@@ -157,13 +157,4 @@ describe("dadbod-db-config", function()
         }, vim.g.dbs)
     end)
 
-    it("setup can skip auto-loading", function()
-        write_config(path("project", ".dbs.json"), "skip", "sqlite:skip.sqlite")
-        edit_file(path("project", "src", "query.sql"))
-
-        assert.is_nil(db_config.setup({
-            auto_load = false,
-        }))
-        assert.is_nil(vim.g.dbs)
-    end)
 end)
