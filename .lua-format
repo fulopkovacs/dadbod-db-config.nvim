@@ -1,0 +1,9 @@
+keep_simple_function_one_line: false
+column_limit: 150
+break_after_table_lb: true
+break_before_table_rb: true
+extra_sep_at_table_end: true
+column_table_limit: 20
+break_after_operator: true
+single_quote_to_double_quote: true
+keep_simple_control_block_one_line: false
