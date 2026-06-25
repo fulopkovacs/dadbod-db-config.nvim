@@ -1,0 +1,88 @@
+base: lua51
+
+globals:
+  vim.api.nvim_create_user_command:
+    args:
+      - type: string
+      - type: function
+      - type: table
+  vim.api.nvim_del_user_command:
+    args:
+      - type: string
+  vim.cmd:
+    args:
+      - type: string
+  vim.cmd.edit:
+    args:
+      - type: string
+  vim.fn.delete:
+    args:
+      - type: string
+      - type: string
+        required: false
+  vim.fn.fnameescape:
+    args:
+      - type: string
+  vim.fn.getcwd:
+    args: []
+  vim.fn.mkdir:
+    args:
+      - type: string
+      - type: string
+        required: false
+  vim.fn.readfile:
+    args:
+      - type: string
+  vim.fn.resolve:
+    args:
+      - type: string
+  vim.fn.tempname:
+    args: []
+  vim.fn.writefile:
+    args:
+      - type: table
+      - type: string
+  vim.fs.dirname:
+    args:
+      - type: string
+  vim.fs.joinpath:
+    args:
+      - type: string
+      - type: "..."
+        required: false
+  vim.fs.root:
+    args:
+      - type: any
+      - type: table
+  vim.g.*:
+    property: full-write
+  vim.islist:
+    args:
+      - type: any
+  vim.json.decode:
+    args:
+      - type: string
+  describe:
+    args:
+      - type: string
+      - type: function
+  it:
+    args:
+      - type: string
+      - type: function
+  before_each:
+    args:
+      - type: function
+  after_each:
+    args:
+      - type: function
+  assert.are.same:
+    args:
+      - type: any
+      - type: any
+  assert.is_function:
+    args:
+      - type: any
+  assert.is_nil:
+    args:
+      - type: any
