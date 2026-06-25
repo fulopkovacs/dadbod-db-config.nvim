@@ -1,12 +1,12 @@
 # dadbod-db-config.nvim
 
-Load a project-local `.dbs.lua` file for vim-dadbod.
+Load a project-local `.dbs.json` file for vim-dadbod.
 
-The plugin searches upward from the current buffer for the nearest `.dbs.lua`
-file using `vim.fs.root()`. If it finds one, it executes that file with
-`dofile()`.
+The plugin searches upward from the current buffer for the nearest `.dbs.json`
+file using `vim.fs.root()`. If it finds one, it reads the database connections
+from JSON and sets `vim.g.dbs` for vim-dadbod-ui.
 
-This works well in monorepos: the nearest `.dbs.lua` wins.
+This works well in monorepos: the nearest `.dbs.json` wins.
 
 ## Requirements
 
@@ -49,20 +49,21 @@ For local development with `dev = true`:
 
 ## Usage
 
-Create a `.dbs.lua` file in your project:
+Create a `.dbs.json` file in your project:
 
-```lua
-local dbs = {
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/fulopkovacs/dadbod-db-config.nvim/main/schemas/dbs.schema.json",
+  "dbs": [
     {
-        name = "opera-data-collection-scripts",
-        url = "sqlite:local.sqlite",
-    },
+      "name": "opera-data-collection-scripts",
+      "url": "sqlite:local.sqlite"
+    }
+  ]
 }
-
-vim.api.nvim_set_var("dbs", dbs)
 ```
 
-By default, `setup()` loads the nearest `.dbs.lua` immediately:
+By default, `setup()` loads the nearest `.dbs.json` immediately:
 
 ```lua
 require("dadbod-db-config").setup()
@@ -93,12 +94,18 @@ require("dadbod-db-config").load()
 ```lua
 {
     loaded = true,
-    path = "/path/to/project/.dbs.lua",
+    dbs = {
+        {
+            name = "opera-data-collection-scripts",
+            url = "sqlite:local.sqlite",
+        },
+    },
+    path = "/path/to/project/.dbs.json",
     root = "/path/to/project",
 }
 ```
 
-When no `.dbs.lua` is found:
+When no `.dbs.json` is found:
 
 ```lua
 {
@@ -107,10 +114,51 @@ When no `.dbs.lua` is found:
 }
 ```
 
-## Security
+When `.dbs.json` cannot be decoded:
 
-`.dbs.lua` is executable Lua. Only use this plugin in projects where you trust
-the `.dbs.lua` file.
+```lua
+{
+    loaded = false,
+    reason = "invalid_json",
+    path = "/path/to/project/.dbs.json",
+    root = "/path/to/project",
+}
+```
+
+When `.dbs.json` does not contain a `dbs` array:
+
+```lua
+{
+    loaded = false,
+    reason = "invalid_config",
+    path = "/path/to/project/.dbs.json",
+    root = "/path/to/project",
+}
+```
+
+## Schema
+
+The JSON schema is available at:
+
+```text
+https://raw.githubusercontent.com/fulopkovacs/dadbod-db-config.nvim/main/schemas/dbs.schema.json
+```
+
+Use it in `.dbs.json` with:
+
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/fulopkovacs/dadbod-db-config.nvim/main/schemas/dbs.schema.json",
+  "dbs": []
+}
+```
+
+Each database entry requires `name` and `url`. Additional properties are allowed
+on entries so dadbod-related metadata can be added later.
+
+## Safety
+
+`.dbs.json` is data-only and is not executed as Lua.
 
 ## Development
 

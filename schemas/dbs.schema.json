@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/fulopkovacs/dadbod-db-config.nvim/main/schemas/dbs.schema.json",
+  "title": "dadbod-db-config.nvim database config",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["dbs"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "dbs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["name", "url"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Display name for the database connection."
+          },
+          "url": {
+            "type": "string",
+            "minLength": 1,
+            "description": "vim-dadbod database URL."
+          }
+        }
+      }
+    }
+  }
+}
