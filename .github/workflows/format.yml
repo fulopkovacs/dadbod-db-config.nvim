@@ -1,5 +1,8 @@
 name: Formatting
 
+env:
+  STYLUA_VERSION: 2.5.2
+
 on:
   push:
     branches:
@@ -16,9 +19,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check formatting
-        uses: JohnnyMorganz/stylua-action@v5
+      - name: Cache StyLua
+        id: cache-stylua
+        uses: actions/cache@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          version: 2.5.2
-          args: --check .
+          path: ~/.cargo/bin/stylua
+          key: stylua-${{ runner.os }}-${{ env.STYLUA_VERSION }}
+
+      - name: Install Rust
+        if: steps.cache-stylua.outputs.cache-hit != 'true'
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install StyLua
+        if: steps.cache-stylua.outputs.cache-hit != 'true'
+        run: cargo install stylua --version "$STYLUA_VERSION"
+
+      - name: Check formatting
+        run: make format-check
