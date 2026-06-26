@@ -1,8 +1,5 @@
 name: Formatting
 
-env:
-  LUA_FORMAT_VERSION: 1.3.6
-
 on:
   push:
     branches:
@@ -13,29 +10,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  lua_format:
-    name: lua-format
+  stylua:
+    name: StyLua
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Cache lua-format
-        id: cache-lua-format
-        uses: actions/cache@v4
-        with:
-          path: ~/.local/bin/lua-format
-          key: lua-format-${{ runner.os }}-${{ env.LUA_FORMAT_VERSION }}
-
-      - name: Build lua-format
-        if: steps.cache-lua-format.outputs.cache-hit != 'true'
-        run: |
-          git clone --depth 1 --recurse-submodules --shallow-submodules --branch "$LUA_FORMAT_VERSION" https://github.com/Koihik/LuaFormatter.git "$RUNNER_TEMP/LuaFormatter"
-          cmake -S "$RUNNER_TEMP/LuaFormatter" -B "$RUNNER_TEMP/LuaFormatter/build" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$HOME/.local" -DBUILD_TESTS=OFF
-          cmake --build "$RUNNER_TEMP/LuaFormatter/build" --parallel
-          cmake --install "$RUNNER_TEMP/LuaFormatter/build"
-
-      - name: Add lua-format to PATH
-        run: echo "$HOME/.local/bin" >> "$GITHUB_PATH"
-
       - name: Check formatting
-        run: make format-check
+        uses: JohnnyMorganz/stylua-action@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: 2.5.2
+          args: --check .

@@ -12,8 +12,7 @@ lint:
 	selene .
 
 format:
-	git ls-files '*.lua' | xargs lua-format -i -c .lua-format
+	stylua .
 
 format-check:
-	$(MAKE) format
-	git diff --exit-code
+	stylua --check .

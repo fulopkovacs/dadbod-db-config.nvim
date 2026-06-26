@@ -22,10 +22,10 @@ describe("dadbod-db-config", function()
     local function write_config(file_path, name, url)
         write_file(file_path, {
             "{",
-            "  \"dbs\": [",
+            '  "dbs": [',
             "    {",
-            string.format("      \"name\": \"%s\",", name),
-            string.format("      \"url\": \"%s\"", url),
+            string.format('      "name": "%s",', name),
+            string.format('      "url": "%s"', url),
             "    }",
             "  ]",
             "}",
@@ -156,5 +156,4 @@ describe("dadbod-db-config", function()
             },
         }, vim.g.dbs)
     end)
-
 end)
