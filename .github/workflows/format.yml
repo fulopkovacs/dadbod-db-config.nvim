@@ -29,7 +29,7 @@ jobs:
       - name: Build lua-format
         if: steps.cache-lua-format.outputs.cache-hit != 'true'
         run: |
-          git clone --depth 1 --branch "$LUA_FORMAT_VERSION" https://github.com/Koihik/LuaFormatter.git "$RUNNER_TEMP/LuaFormatter"
+          git clone --depth 1 --recurse-submodules --shallow-submodules --branch "$LUA_FORMAT_VERSION" https://github.com/Koihik/LuaFormatter.git "$RUNNER_TEMP/LuaFormatter"
           cmake -S "$RUNNER_TEMP/LuaFormatter" -B "$RUNNER_TEMP/LuaFormatter/build" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$HOME/.local"
           cmake --build "$RUNNER_TEMP/LuaFormatter/build" --parallel
           cmake --install "$RUNNER_TEMP/LuaFormatter/build"
