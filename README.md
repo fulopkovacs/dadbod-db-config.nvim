@@ -10,7 +10,7 @@ This works well in monorepos: the nearest `.dbs.json` wins.
 
 ## Requirements
 
-- Neovim with `vim.fs.root()` support
+- Neovim version `0.10.0` or higher
 - [tpope/vim-dadbod](https://github.com/tpope/vim-dadbod)
 - [kristijanhusak/vim-dadbod-ui](https://github.com/kristijanhusak/vim-dadbod-ui)
 
