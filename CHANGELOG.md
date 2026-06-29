@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1] - 2026-06-30
+
+### Changed
+
+- Clarify the motivation for project-local `.dbs.json` config files.
+- Update the lazy.nvim installation example to load this plugin as a dependency of `vim-dadbod-ui`.
+- Document that `.dbs.json` should be added to `.gitignore` because it may contain local database URLs or credentials.
+
 ## [1.0.0] - 2026-06-28
 
 Initial release.
