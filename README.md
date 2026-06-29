@@ -20,10 +20,10 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 {
-    "dadbod-db-config.nvim",
+    "kristijanhusak/vim-dadbod-ui",
     dependencies = {
         "tpope/vim-dadbod",
-        "kristijanhusak/vim-dadbod-ui",
+        "fulopkovacs/dadbod-db-config.nvim",
     },
 }
 ```
@@ -32,11 +32,13 @@ For local development with `dev = true`:
 
 ```lua
 {
-    "dadbod-db-config.nvim",
-    dev = true,
+    "kristijanhusak/vim-dadbod-ui",
     dependencies = {
         "tpope/vim-dadbod",
-        "kristijanhusak/vim-dadbod-ui",
+        {
+            "fulopkovacs/dadbod-db-config.nvim",
+            dev = true,
+        },
     },
 }
 ```
@@ -56,6 +58,8 @@ Create a `.dbs.json` file in your project:
   ]
 }
 ```
+
+Add `.dbs.json` to your project's `.gitignore`, since it may contain local database URLs or credentials.
 
 The plugin loads the nearest `.dbs.json` automatically when it is loaded.
 
