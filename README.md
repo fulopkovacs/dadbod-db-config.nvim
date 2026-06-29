@@ -1,12 +1,29 @@
 # dadbod-db-config.nvim
 
-Load a project-local `.dbs.json` file for [vim-dadbod](https://github.com/tpope/vim-dadbod).
+Load a project-local `.dbs.json` file for [vim-dadbod-ui](https://github.com/kristijanhusak/vim-dadbod-ui).
 
 The plugin searches upward from the current buffer for the nearest `.dbs.json`
 file using `vim.fs.root()`. If it finds one, it reads the database connections
 from JSON and sets `vim.g.dbs` for [vim-dadbod-ui](https://github.com/kristijanhusak/vim-dadbod-ui).
 
 This works well in monorepos: the nearest `.dbs.json` wins.
+
+## Motivation
+
+I wanted an easy, well-structured way to define project-level database connections.
+
+`vim-dadbod-ui` gives you 3 ways to do this:
+
+- [using environment variables](https://github.com/kristijanhusak/vim-dadbod-ui#through-environment-variables)
+- [the `DBUIAddConnection` command](https://github.com/kristijanhusak/vim-dadbod-ui#via-dbuiaddconnection-command)
+- [manually setting the `g:dbs` global variable](https://github.com/kristijanhusak/vim-dadbod-ui#via-gdbs-global-variable)
+
+The docs mention that you can use the last option in project-local Vim configs.
+
+I wasn't satisfied with any of these solutions, so I created a new approach:
+
+- single-purpose config files, not general Neovim config
+- easy validation with JSON schemas
 
 ## Requirements
 
