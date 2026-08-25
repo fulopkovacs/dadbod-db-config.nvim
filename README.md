@@ -109,8 +109,10 @@ Use it in `.dbs.json` with:
 }
 ```
 
-Each database entry requires `name` and `url`. Additional properties are allowed
-on entries so dadbod-related metadata can be added later.
+Each database entry requires `name` and `url`. Set the optional boolean `dev`
+property to `true` to identify a database used for development. The property is
+metadata and does not change how this plugin loads the database. Additional
+properties are allowed on entries so dadbod-related metadata can be added later.
 
 Example config:
 
@@ -120,7 +122,8 @@ Example config:
   "dbs": [
     {
       "name": "opera-database",
-      "url": "sqlite:opera-db.sqlite"
+      "url": "sqlite:opera-db.sqlite",
+      "dev": true
     }
   ]
 }
