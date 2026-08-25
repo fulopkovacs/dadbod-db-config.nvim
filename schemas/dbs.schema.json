@@ -25,6 +25,10 @@
             "type": "string",
             "minLength": 1,
             "description": "vim-dadbod database URL."
+          },
+          "dev": {
+            "type": "boolean",
+            "description": "Whether this database is used for development."
           }
         }
       }
